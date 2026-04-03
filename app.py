@@ -24,7 +24,7 @@ r = redis.Redis(host='localhost', port=6379, decode_responses=True)
 @app.route('/usuarios', methods=['POST'])
 def criar_usuario():
     dados = request.json
-    # USANDO ARGON2 PARA CRIPTOGRAFAR
+    #vlw cerqueira
     hash_seguro = ph.hash(dados.get('senha'))
     novo = Usuario(email=dados.get('email'), senha_hash=hash_seguro)
     db.session.add(novo)
@@ -48,7 +48,7 @@ def login():
 def recuperar():
     email = request.json.get('email')
     codigo = str(random.randint(100000, 999999))
-    r.setex(f"recuperar:{email}", 300, codigo) # Expira em 5 min
+    r.setex(f"recuperar:{email}", 300, codigo) 
     print(f"--- CÓDIGO PARA {email}: {codigo} ---")
     return jsonify({"sucesso": True, "mensagem": "Código enviado (veja o terminal)!"})
 
