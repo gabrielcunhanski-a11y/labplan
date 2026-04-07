@@ -22,10 +22,27 @@ export default function App() {
     if (res.sucesso) { setVista('painel'); carregar(); } else alert(res.mensagem);
   };
 
-  const cadastrar = async (e) => {
-    e.preventDefault();
-    const res = await api('/usuarios', 'POST', form);
-    alert(res.mensagem); if (res.sucesso) setVista('login');
+ const cadastrar = async (e) => {
+
+e.preventDefault();
+
+const res = await api('/usuarios', 'POST', form);
+
+alert(res.mensagem); if (res.sucesso) setVista('login');
+
+}; 
+const recuperarSenha = async (e) => {
+    e.preventDefault(); 
+    
+    
+    const res = await api('/solicitar-recuperacao', 'POST', { email: form.email });
+    
+  
+    alert(res.mensagem || 'Pedido enviado! Verifica o Mailtrap.'); 
+    
+    if (res.sucesso) {
+      setVista('login'); 
+    }
   };
 
   const carregar = async () => setUsuarios(await api('/usuarios'));
@@ -54,12 +71,14 @@ export default function App() {
           <button type="button" onClick={() => setVista('login')} style={{ background: 'none', border: 'none', color: 'gray', cursor: 'pointer' }}>Voltar</button>
         </form>
       )}
-
-      {vista === 'recuperar' && (
-        <form style={{ display: 'flex', flexDirection: 'column', gap: '10px', background: '#fff3cd', padding: '20px', borderRadius: '10px' }}>
+{vista === 'recuperar' && (
+        <form onSubmit={recuperarSenha} style={{ display: 'flex', flexDirection: 'column', gap: '10px', background: '#fff3cd', padding: '20px', borderRadius: '10px' }}>
           <h3>Recuperar Senha</h3>
           <input name="email" type="email" placeholder="Digite seu Email" onChange={handleChange} required style={{ padding: '10px' }} />
-          <button type="button" onClick={() => alert('Código enviado ao terminal!')} style={{ padding: '10px', background: '#ffc107', border: 'none', borderRadius: '5px' }}>Enviar Código</button>
+          
+          {/* Mudámos para type="submit" e tirámos o onClick com o alert antigo */}
+          <button type="submit" style={{ padding: '10px', background: '#ffc107', border: 'none', borderRadius: '5px' }}>Enviar Código</button>
+          
           <button type="button" onClick={() => setVista('login')} style={{ background: 'none', border: 'none', color: 'gray', cursor: 'pointer' }}>Voltar ao Login</button>
         </form>
       )}
