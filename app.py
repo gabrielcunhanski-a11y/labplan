@@ -16,16 +16,15 @@ app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173"]) 
 
 
-# ---------------- CONFIGURAÇÕES ---------------- #
-# Base de Dados
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Mailtrap / E-mail (VALORES DIRETOS)
+
 app.config['MAIL_SERVER'] = 'sandbox.smtp.mailtrap.io'
 app.config['MAIL_PORT'] = 2525
-app.config['MAIL_USERNAME'] = '1cd5c941c016ba'  # Mantém as aspas!
-app.config['MAIL_PASSWORD'] = 'eba043c96b5d56'  # Mantém as aspas!
+app.config['MAIL_USERNAME'] = '1cd5c941c016ba'  
+app.config['MAIL_PASSWORD'] = 'eba043c96b5d56'  
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
